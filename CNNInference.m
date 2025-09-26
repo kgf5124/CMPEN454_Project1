@@ -1,8 +1,12 @@
+% Load network parameters & data
 load('CNNparameters.mat');
 load('cifar10testdata.mat');
+
+% Pick one sample image (32x32x3 RGB)
 imrgb = imageset(:,:,:,1);
 input = imrgb; % A 32x32x3 image
 
+% Forward pass on single image
 for layer = 1:18
     type = layertypes{layer};
     switch type
@@ -27,7 +31,7 @@ probs = squeeze(layerOutputs{18});
 [maxprob, maxclass] = max(probs);
 fprintf('Predicted class: %s with probability %.2f\n', classlabels{maxclass}, maxprob);
 
-//mike
+
 
 % ================================
 % Run on full CIFAR-10 test set
