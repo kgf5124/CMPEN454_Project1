@@ -1,0 +1,29 @@
+% Assume:
+% predictions: N x C matrix of model outputs (probabilities or scores)
+% trueLabels: N x 1 vector of true class indices
+% N = number of test images, C = number of classes
+
+Ks = [1, 3, 5];           % Top-K values to evaluate
+numImages = size(predictions, 1);
+topKAcc = zeros(length(Ks),1);
+
+for kIdx = 1:length(Ks)
+    K = Ks(kIdx);
+    correctCount = 0;
+    for i = 1:numImages
+        [~, sortedIdx] = sort(predictions(i,:), 'descend'); % Sort class scores
+        topK = sortedIdx(1:K);
+        if ismember(trueLabels(i), topK)
+            correctCount = correctCount + 1;
+        end
+    end
+    topKAcc(kIdx) = correctCount / numImages;
+end
+
+% Plot Top-K accuracy
+figure;
+plot(Ks, topKAcc*100, '-o', 'LineWidth', 2);
+xlabel('K (Top-K)');
+ylabel('Accuracy (%)');
+title('Top-K Classification Accuracy');
+grid on;
