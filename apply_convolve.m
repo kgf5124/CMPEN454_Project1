@@ -14,12 +14,16 @@ function outarray = apply_convolve(inarray, filterbank, biasvals)
 outarray = zeros(N, M, D2);
 
 for d2 = 1:D2
+    % Start with an empty feature map for this output channel
     out_channel = zeros(N, M);
+
+    % For each input channel, convolve with its corresponding filter
     for d1 = 1:D1
         filter = filterbank(:,:,d1,d2);
         in_channel = inarray(:,:,d1);
         out_channel = out_channel + imfilter(in_channel, filter, 'conv', 'same', 'replicate');
     end
+    % Add bias for this output channel
     outarray(:,:,d2) = out_channel + biasvals(d2);
 end
 end
