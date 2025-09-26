@@ -8,7 +8,7 @@ for d2 = 1:D2
     for d1 = 1:D1
         filter = filterbank(:,:,d1,d2);
         in_channel = inarray(:,:,d1);
-        out_channel = out_channel + imfilter(in_channel, filter, 'conv', 'same', 'replicate');
+        out_channel = out_channel + imfilter(in_channel, filter, 'conv', 'same', 'conv');
     end
     outarray(:,:,d2) = out_channel + biasvals(d2);
 end
