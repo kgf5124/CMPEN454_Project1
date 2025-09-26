@@ -1,0 +1,30 @@
+% Load or read new images
+newImageFiles = {'new1.jpg', 'new2.jpg', 'new3.jpg'}; % example files
+numNew = length(newImageFiles);
+predictedLabels = zeros(numNew, 1);
+
+for i = 1:numNew
+    img = imread(newImageFiles{i});
+    img = imresize(img, [inputSize(1) inputSize(2)]); % resize to CNN input size
+    if size(img,3) == 1
+        img = repmat(img, [1 1 3]); % convert grayscale to RGB if needed
+    end
+    img = double(img)/255; % normalize if your model expects [0,1]
+    
+    % Run CNN prediction (assuming you have 'trainedNet' from your project)
+    scores = predict(trainedNet, img);
+    [maxScore, labelIdx] = max(scores);
+    
+    % Optional: handle unknown category
+    threshold = 0.5; 
+    if maxScore < threshold
+        predictedLabels(i) = 0; % 0 = unknown
+    else
+        predictedLabels(i) = labelIdx;
+    end
+end
+
+% Display results
+for i = 1:numNew
+    fprintf('Image %s predicted as: %d\n', newImageFiles{i}, predictedLabels(i));
+end
