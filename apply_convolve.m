@@ -1,11 +1,11 @@
 function outarray = apply_convolve(inarray, filterbank, biasvals)
 % APPLY_CONVOLVE  Perform convolution of input feature maps with a filter bank
-%
+
 % Inputs:
 %   inarray    - N x M x D1 input array (image or previous layer feature maps)
 %   filterbank - h x w x D1 x D2 filters (h,w kernel size, D1 input depth, D2 output depth)
 %   biasvals   - 1 x D2 vector of bias values (one per output channel)
-%
+
 % Output:
 %   outarray   - N x M x D2 output array (feature maps after convolution)
 
